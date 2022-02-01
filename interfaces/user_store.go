@@ -1,3 +1,5 @@
+// PLAT-001: Initial shared interfaces for Acme Shop services
+// This package defines the core contracts between microservices
 package interfaces
 
 import (
