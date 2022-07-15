@@ -13,6 +13,7 @@ const (
 	bcryptCost = 12
 )
 
+// SEC-120: Secure hashing utilities for password storage
 // HashPassword hashes a password using bcrypt.
 // This is the recommended method for password hashing.
 func HashPassword(password string) (string, error) {
