@@ -3,6 +3,8 @@ package models
 import "time"
 
 // UserV1 represents a user in the legacy format.
+// Deprecated: Use User instead. This type will be removed in v3.0.
+// TODO(TEAM-BACKEND): Remove after all services migrated to v2.
 type UserV1 struct {
 	ID        string    `json:"id"`
 	Email     string    `json:"email"`
@@ -69,6 +71,7 @@ type UserListFilter struct {
 }
 
 // ToUserV1 converts a User to the legacy UserV1 format.
+// Deprecated: Use User directly instead of converting to V1.
 // TODO(TEAM-BACKEND): Remove after v1 API is disabled
 func ToUserV1(user *User) *UserV1 {
 	return &UserV1{
@@ -80,6 +83,7 @@ func ToUserV1(user *User) *UserV1 {
 }
 
 // FromUserV1 converts a UserV1 to the new User format.
+// Deprecated: Will be removed when v1 API is disabled.
 // TODO(TEAM-BACKEND): Remove after v1 API is disabled
 func FromUserV1(userV1 *UserV1) *User {
 	return &User{

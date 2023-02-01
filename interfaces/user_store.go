@@ -6,29 +6,8 @@ import (
 	"github.com/tm-acme-shop/acme-shop-shared-go/models"
 )
 
-// UserStoreV1 is the legacy user store interface.
-type UserStoreV1 interface {
-	// GetUserByID retrieves a user by their unique identifier.
-	GetUserByID(ctx context.Context, id string) (*models.UserV1, error)
-
-	// GetUserByEmail retrieves a user by their email address.
-	GetUserByEmail(ctx context.Context, email string) (*models.UserV1, error)
-
-	// CreateUser creates a new user in the store.
-	CreateUser(ctx context.Context, email, name, password string) (*models.UserV1, error)
-
-	// UpdateUser updates an existing user.
-	UpdateUser(ctx context.Context, id, email, name string) (*models.UserV1, error)
-
-	// DeleteUser removes a user from the store.
-	DeleteUser(ctx context.Context, id string) error
-
-	// ListUsers retrieves all users with pagination.
-	ListUsers(ctx context.Context, limit, offset int) ([]*models.UserV1, error)
-}
-
 // UserStore defines the interface for user persistence operations.
-// Implementations: PostgresUserStore (users-service)
+// Implementations: PostgresUserStore (users-service), ReadonlyUserStore (analytics-etl)
 type UserStore interface {
 	// GetByID retrieves a user by their unique identifier.
 	GetByID(ctx context.Context, id string) (*models.User, error)
@@ -50,6 +29,35 @@ type UserStore interface {
 
 	// UpdateLastLogin updates the user's last login timestamp.
 	UpdateLastLogin(ctx context.Context, id string) error
+}
+
+// UserStoreV1 is the legacy user store interface.
+// Deprecated: Use UserStore instead. This interface will be removed in v3.0.
+// TODO(TEAM-BACKEND): Migrate all services to UserStore by Q1 2024
+type UserStoreV1 interface {
+	// GetUserByID retrieves a user by ID using the legacy format.
+	// Deprecated: Use UserStore.GetByID instead.
+	GetUserByID(ctx context.Context, id string) (*models.UserV1, error)
+
+	// GetUserByEmail retrieves a user by their email address.
+	// Deprecated: Use UserStore.GetByEmail instead.
+	GetUserByEmail(ctx context.Context, email string) (*models.UserV1, error)
+
+	// CreateUser creates a user using the legacy format.
+	// Deprecated: Use UserStore.Create instead.
+	CreateUser(ctx context.Context, email, name, password string) (*models.UserV1, error)
+
+	// UpdateUser updates an existing user.
+	// Deprecated: Use UserStore.Update instead.
+	UpdateUser(ctx context.Context, id, email, name string) (*models.UserV1, error)
+
+	// DeleteUser removes a user from the store.
+	// Deprecated: Use UserStore.Delete instead.
+	DeleteUser(ctx context.Context, id string) error
+
+	// ListUsers retrieves all users with pagination.
+	// Deprecated: Use UserStore.List instead.
+	ListUsers(ctx context.Context, limit, offset int) ([]*models.UserV1, error)
 }
 
 // UserCache provides caching for user lookups.
