@@ -20,7 +20,8 @@ type UserV1 struct {
 	CreatedAt time.Time `json:"created_at"`
 }
 
-// User represents a user in the system (v2 API).
+// API-160: User represents a user in the system (v2 API).
+// Added alongside UserV1 for gradual migration
 type User struct {
 	ID           string    `json:"id"`
 	Email        string    `json:"email"`
