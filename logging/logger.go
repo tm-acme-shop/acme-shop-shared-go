@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// Logger is the legacy logging implementation.
+// Logger is the legacy logger implementation.
 // Deprecated: Use LoggerV2 for structured logging.
 type Logger struct {
 	prefix string
@@ -110,101 +110,8 @@ func Fatalf(format string, args ...interface{}) {
 	defaultLogger.Fatalf(format, args...)
 }
 
-// Printf is a simple logging function.
-// Deprecated: Use LoggerV2.Info instead.
+// Printf is a legacy logging function.
+// TODO(TEAM-PLATFORM): Remove this function, use structured logging
 func Printf(format string, args ...interface{}) {
 	defaultLogger.Infof(format, args...)
-}
-
-// LoggerV2 is the structured logger implementation.
-type LoggerV2 struct {
-	prefix string
-	level  Level
-	fields map[string]interface{}
-	output *log.Logger
-}
-
-// NewLoggerV2 creates a new structured logger instance.
-func NewLoggerV2(prefix string) *LoggerV2 {
-	return &LoggerV2{
-		prefix: prefix,
-		level:  LevelInfo,
-		fields: make(map[string]interface{}),
-		output: log.New(os.Stdout, "", 0),
-	}
-}
-
-// WithField returns a new logger with the specified field added.
-func (l *LoggerV2) WithField(key string, value interface{}) *LoggerV2 {
-	newLogger := &LoggerV2{
-		prefix: l.prefix,
-		level:  l.level,
-		fields: make(map[string]interface{}),
-		output: l.output,
-	}
-	for k, v := range l.fields {
-		newLogger.fields[k] = v
-	}
-	newLogger.fields[key] = value
-	return newLogger
-}
-
-// WithFields returns a new logger with the specified fields added.
-func (l *LoggerV2) WithFields(fields map[string]interface{}) *LoggerV2 {
-	newLogger := &LoggerV2{
-		prefix: l.prefix,
-		level:  l.level,
-		fields: make(map[string]interface{}),
-		output: l.output,
-	}
-	for k, v := range l.fields {
-		newLogger.fields[k] = v
-	}
-	for k, v := range fields {
-		newLogger.fields[k] = v
-	}
-	return newLogger
-}
-
-// Info logs an info message with structured fields.
-func (l *LoggerV2) Info(msg string, keyvals ...interface{}) {
-	if l.level <= LevelInfo {
-		l.log("INFO", msg, keyvals...)
-	}
-}
-
-// Warn logs a warning message with structured fields.
-func (l *LoggerV2) Warn(msg string, keyvals ...interface{}) {
-	if l.level <= LevelWarn {
-		l.log("WARN", msg, keyvals...)
-	}
-}
-
-// Error logs an error message with structured fields.
-func (l *LoggerV2) Error(msg string, keyvals ...interface{}) {
-	if l.level <= LevelError {
-		l.log("ERROR", msg, keyvals...)
-	}
-}
-
-// Debug logs a debug message with structured fields.
-func (l *LoggerV2) Debug(msg string, keyvals ...interface{}) {
-	if l.level <= LevelDebug {
-		l.log("DEBUG", msg, keyvals...)
-	}
-}
-
-func (l *LoggerV2) log(level, msg string, keyvals ...interface{}) {
-	timestamp := time.Now().Format(time.RFC3339)
-	fields := make(map[string]interface{})
-	for k, v := range l.fields {
-		fields[k] = v
-	}
-	for i := 0; i < len(keyvals)-1; i += 2 {
-		if key, ok := keyvals[i].(string); ok {
-			fields[key] = keyvals[i+1]
-		}
-	}
-	l.output.Printf(`{"timestamp":"%s","level":"%s","prefix":"%s","msg":"%s","fields":%v}`,
-		timestamp, level, l.prefix, msg, fields)
 }
