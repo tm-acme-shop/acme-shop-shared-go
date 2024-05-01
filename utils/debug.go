@@ -7,6 +7,8 @@ import (
 	"time"
 )
 
+// PLAT-070: DEPRECATED - Legacy logging utilities
+// TODO(TEAM-PLATFORM): Remove entire file after structured logging migration
 // DebugTimer is a simple timer for debugging performance.
 // Deprecated: Use structured logging with timing fields instead.
 type DebugTimer struct {
