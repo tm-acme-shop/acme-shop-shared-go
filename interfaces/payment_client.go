@@ -7,7 +7,14 @@ import (
 )
 
 // PaymentClient defines the interface for payment processing operations.
-// Implementations: StripePaymentClient (payments-service), MockPaymentClient (tests)
+//
+// Go implementations (discoverable via "Find Implementations"):
+//   - HTTPPaymentClient (orders-service)
+//   - MockPaymentClient (tests)
+//
+// Python equivalents (payments-service) - Note: Sourcegraph's Precise Code Navigation
+// does not currently support cross-language navigation, so Python implementations
+// will not appear in "Find Implementations" for this Go interface.
 type PaymentClient interface {
 	// ProcessPayment initiates a payment for an order.
 	ProcessPayment(ctx context.Context, req *models.ProcessPaymentRequest) (*models.ProcessPaymentResponse, error)
