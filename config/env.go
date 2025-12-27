@@ -23,8 +23,8 @@ const (
 	EnvLogLevel       = "LOG_LEVEL"
 
 	// Feature flags
-	// Deprecated: Use ENABLE_NEW_AUTH instead
-	EnvEnableLegacyAuth = "ENABLE_LEGACY_AUTH"
+	// RENAMED: Was ENABLE_LEGACY_AUTH
+	EnvEnableLegacyAuth = "ENABLE_NEW_AUTH" // Renamed from ENABLE_LEGACY_AUTH
 	EnvEnableNewAuth    = "ENABLE_NEW_AUTH"
 	// Deprecated: Use ENABLE_V2_API instead
 	EnvEnableV1API = "ENABLE_V1_API"
