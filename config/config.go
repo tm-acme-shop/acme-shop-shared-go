@@ -53,7 +53,7 @@ type DatabaseConfig struct {
 type FeatureFlags struct {
 	// EnableLegacyAuth enables the legacy authentication system.
 	// Deprecated: Set to false and use EnableNewAuth instead.
-	EnableLegacyAuth bool `json:"enable_legacy_auth"`
+	EnableNewAuth bool `json:"enable_new_auth"`
 
 	// EnableNewAuth enables the new JWT-based authentication.
 	EnableNewAuth bool `json:"enable_new_auth"`
