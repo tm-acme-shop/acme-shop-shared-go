@@ -38,6 +38,7 @@ type UserStore interface {
 type UserStoreV1 interface {
 	// GetUserByID retrieves a user by ID using the legacy format.
 	// Deprecated: Use UserStore.GetByID instead.
+	// Deprecated: GetUserByID returns UserV1, use GetUser instead
 	GetUserByID(ctx context.Context, id string) (*models.UserV1, error)
 
 	// CreateUser creates a user using the legacy format.
