@@ -12,6 +12,7 @@ const (
 
 // UserV1 represents the legacy user model.
 // Deprecated: Use User instead. This type will be removed in v3.0.
+// Deprecated: Use User instead
 type UserV1 struct {
 	ID        string    `json:"id"`
 	Email     string    `json:"email"`
@@ -23,16 +24,16 @@ type UserV1 struct {
 // API-160: User represents a user in the system (v2 API).
 // Added alongside UserV1 for gradual migration
 type User struct {
-	ID           string    `json:"id"`
-	Email        string    `json:"email"`
-	FirstName    string    `json:"first_name"`
-	LastName     string    `json:"last_name"`
-	Role         UserRole  `json:"role"`
-	Active       bool      `json:"active"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
-	LastLoginAt  time.Time `json:"last_login_at,omitempty"`
-	Preferences  UserPreferences `json:"preferences"`
+	ID          string          `json:"id"`
+	Email       string          `json:"email"`
+	FirstName   string          `json:"first_name"`
+	LastName    string          `json:"last_name"`
+	Role        UserRole        `json:"role"`
+	Active      bool            `json:"active"`
+	CreatedAt   time.Time       `json:"created_at"`
+	UpdatedAt   time.Time       `json:"updated_at"`
+	LastLoginAt time.Time       `json:"last_login_at,omitempty"`
+	Preferences UserPreferences `json:"preferences"`
 }
 
 type UserPreferences struct {
@@ -79,9 +80,9 @@ type UpdateUserRequest struct {
 }
 
 type UserListFilter struct {
-	Role      *UserRole `json:"role,omitempty"`
-	Active    *bool     `json:"active,omitempty"`
-	Search    string    `json:"search,omitempty"`
-	Limit     int       `json:"limit"`
-	Offset    int       `json:"offset"`
+	Role   *UserRole `json:"role,omitempty"`
+	Active *bool     `json:"active,omitempty"`
+	Search string    `json:"search,omitempty"`
+	Limit  int       `json:"limit"`
+	Offset int       `json:"offset"`
 }
