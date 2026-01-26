@@ -137,6 +137,10 @@ func NewServiceUnavailableError(service string) *AppError {
 	}
 }
 
+// ValidationError is a type alias for validation errors.
+// Deprecated: Use AppError with NewValidationError instead.
+type ValidationError = AppError
+
 // IsNotFound checks if an error is a not found error.
 func IsNotFound(err error) bool {
 	return errors.Is(err, ErrNotFound)

@@ -10,6 +10,14 @@ const (
 	RoleVendor   UserRole = "vendor"
 )
 
+type UserStatus string
+
+const (
+	UserStatusActive   UserStatus = "active"
+	UserStatusInactive UserStatus = "inactive"
+	UserStatusSuspended UserStatus = "suspended"
+)
+
 // UserV1 represents the legacy user model.
 // Deprecated: Use User instead. This type will be removed in v3.0.
 type UserV1 struct {
@@ -23,15 +31,16 @@ type UserV1 struct {
 // API-160: User represents a user in the system (v2 API).
 // Added alongside UserV1 for gradual migration
 type User struct {
-	ID           string    `json:"id"`
-	Email        string    `json:"email"`
-	FirstName    string    `json:"first_name"`
-	LastName     string    `json:"last_name"`
-	Role         UserRole  `json:"role"`
-	Active       bool      `json:"active"`
-	CreatedAt    time.Time `json:"created_at"`
-	UpdatedAt    time.Time `json:"updated_at"`
-	LastLoginAt  time.Time `json:"last_login_at,omitempty"`
+	ID           string      `json:"id"`
+	Email        string      `json:"email"`
+	FirstName    string      `json:"first_name"`
+	LastName     string      `json:"last_name"`
+	Role         UserRole    `json:"role"`
+	Status       UserStatus  `json:"status"`
+	Active       bool        `json:"active"`
+	CreatedAt    time.Time   `json:"created_at"`
+	UpdatedAt    time.Time   `json:"updated_at"`
+	LastLoginAt  time.Time   `json:"last_login_at,omitempty"`
 	Preferences  UserPreferences `json:"preferences"`
 }
 
