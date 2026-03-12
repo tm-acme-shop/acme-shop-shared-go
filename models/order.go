@@ -23,7 +23,6 @@ type Order struct {
 	BillingAddress  Address     `json:"billing_address"`
 	Subtotal        Money       `json:"subtotal"`
 	Tax             Money       `json:"tax"`
-	ShippingCost    Money       `json:"shipping_cost"`
 	Total           Money       `json:"total"`
 	PaymentID       string      `json:"payment_id,omitempty"`
 	Notes           string      `json:"notes,omitempty"`
@@ -68,14 +67,13 @@ func NewMoney(amount float64, currency string) Money {
 }
 
 type CreateOrderRequest struct {
-	UserID          string      `json:"user_id"`
-	Items           []OrderItem `json:"items"`
-	ShippingAddress Address     `json:"shipping_address"`
-	BillingAddress  Address     `json:"billing_address"`
-	Subtotal        Money       `json:"subtotal"`
-	Tax             Money       `json:"tax"`
-	Total           Money       `json:"total"`
-	Notes           string      `json:"notes,omitempty"`
+	UserID         string      `json:"user_id"`
+	Items          []OrderItem `json:"items"`
+	BillingAddress Address     `json:"billing_address"`
+	Subtotal       Money       `json:"subtotal"`
+	Tax            Money       `json:"tax"`
+	Total          Money       `json:"total"`
+	Notes          string      `json:"notes,omitempty"`
 }
 
 type UpdateOrderStatusRequest struct {
@@ -107,7 +105,7 @@ func (o *Order) CalculateTotal() {
 	}
 	o.Subtotal = Money{Amount: subtotal, Currency: o.Items[0].UnitPrice.Currency}
 	o.Total = Money{
-		Amount:   o.Subtotal.Amount + o.Tax.Amount + o.ShippingCost.Amount,
+		Amount:   o.Subtotal.Amount + o.Tax.Amount,
 		Currency: o.Subtotal.Currency,
 	}
 }
