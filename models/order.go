@@ -72,6 +72,9 @@ type CreateOrderRequest struct {
 	Items           []OrderItem `json:"items"`
 	ShippingAddress Address     `json:"shipping_address"`
 	BillingAddress  Address     `json:"billing_address"`
+	Subtotal        Money       `json:"subtotal"`
+	Tax             Money       `json:"tax"`
+	Total           Money       `json:"total"`
 	Notes           string      `json:"notes,omitempty"`
 }
 
